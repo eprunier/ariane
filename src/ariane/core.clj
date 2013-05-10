@@ -4,11 +4,11 @@
             [ariane.rss :as rss]
             [ariane.atom :as atom]))
 
-(defn- rss?
+(defn- rss-feed?
   [feed]
   (-> feed :tag (= :rss)))
 
-(defn- atom?
+(defn- atom-feed?
   [feed]
   (-> feed :tag (= :feed)))
 
@@ -17,8 +17,8 @@
   [source]
   (let [feed (xml/parse source)]
     (cond 
-     (rss? feed) (rss/parse-rss (:content feed))
-     (atom? feed) (atom/parse-atom (:content feed))
+     (rss-feed? feed) (rss/parse-rss (:content feed))
+     (atom-feed? feed) (atom/parse-atom (:content feed))
      :else (println "Unkown format"))))
 
 (defn infos
