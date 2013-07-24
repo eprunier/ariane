@@ -17,20 +17,6 @@
   [source]
   (let [feed (xml/parse source)]
     (cond 
-     (rss-feed? feed) (rss/parse-rss (:content feed))
-     (atom-feed? feed) (atom/parse-atom (:content feed))
-     :else (println "Unkown format"))))
-
-(defn infos
-  "Returns feed informations."
-  [data]
-  (filter (fn [[name _]]
-            (not= :item name))
-          data))
-
-(defn items
-  "Returns feed items."
-  [data]
-  (filter (fn [[name _]]
-            (= :item name)) 
-          data))
+     (rss-feed? feed) (rss/parse-rss feed)
+     (atom-feed? feed) (atom/parse-atom feed)
+     :else (println "Unsupported format"))))
